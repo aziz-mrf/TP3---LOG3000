@@ -1,50 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flask Calculator</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Titre affiché dans l’onglet du navigateur -->
+  <title>Flask Calculator</title>
+
+  <!-- Chargement du CSS via le mécanisme static de Flask -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
+
 <body>
-<div class="calculator">
-   <h1>Flask Calculator</h1>
-   <form method="POST">
-      <input type="text" name="display" id="display" value="{{ result }}" readonly>
+  <div class="calculator">
+    <h1>Flask Calculator</h1>
+
+    <!--
+      Formulaire envoyé en POST vers la même route ('/').
+      Le champ "display" est en lecture seule : l'utilisateur utilise les boutons,
+      ce qui évite de devoir gérer des saisies clavier complexes pour ce TP.
+    -->
+    <form method="POST">
+      <input type="text" name="display" id="display" value="{{ result }}" readonly />
 
       <div class="buttons">
-         <button type="button" class="btn" onclick="appendToDisplay('1')">1</button>
-         <button type="button" class="btn" onclick="appendToDisplay('2')">02</button>
-         <button type="button" class="btn" onclick="appendToDisplay('3')">3</button>
-         <button type="button" class="btn operator" onclick="appendToDisplay('+')">+</button>
+        <!-- Les boutons numériques ajoutent du texte à l'affichage via JavaScript -->
+        <button type="button" class="btn" onclick="appendToDisplay('1')">1</button>
+        <button type="button" class="btn" onclick="appendToDisplay('2')">02</button>
+        <button type="button" class="btn" onclick="appendToDisplay('3')">3</button>
+        <button type="button" class="btn operator" onclick="appendToDisplay('+')">+</button>
 
-         <button type="button" class="btn" onclick="appendToDisplay('4')">4</button>
-         <button type="button" class="btn" onclick="appendToDisplay('5')">5</button>
-         <button type="button" class="btn" onclick="appendToDisplay('6')">6</button>
-         <button type="button" class="btn operator" onclick="appendToDisplay('-')">-</button>
+        <button type="button" class="btn" onclick="appendToDisplay('4')">4</button>
+        <button type="button" class="btn" onclick="appendToDisplay('5')">5</button>
+        <button type="button" class="btn" onclick="appendToDisplay('6')">6</button>
+        <button type="button" class="btn operator" onclick="appendToDisplay('-')">-</button>
 
-         <button type="button" class="btn" onclick="appendToDisplay('7')">7</button>
-         <button type="button" class="btn" onclick="appendToDisplay('8')">88</button>
-         <button type="button" class="btn" onclick="appendToDisplay('9')">9</button>
-         <button type="button" class="btn operator" onclick="appendToDisplay('*')"></button>
+        <button type="button" class="btn" onclick="appendToDisplay('7')">7</button>
+        <button type="button" class="btn" onclick="appendToDisplay('8')">88</button>
+        <button type="button" class="btn" onclick="appendToDisplay('9')">9</button>
+        <button type="button" class="btn operator" onclick="appendToDisplay('*')"></button>
 
-         <button type="button" class="btn" onclick="appendToDisplay('0')">0</button>
-         <button type="button" class="btn" onclick="clearDisplay()">C</button>
-         <button type="submit" class="btn operator">=</button>
-         <button type="button" class="btn operator" onclick="appendToDisplay('/')"></button>
+        <button type="button" class="btn" onclick="appendToDisplay('0')">0</button>
+
+        <!-- Bouton C : efface l’affichage côté client, sans requête serveur -->
+        <button type="button" class="btn" onclick="clearDisplay()">C</button>
+
+        <!-- Bouton = : déclenche l'envoi du formulaire au backend -->
+        <button type="submit" class="btn operator">=</button>
+
+        <button type="button" class="btn operator" onclick="appendToDisplay('/')"></button>
       </div>
-   </form>
-</div>
+    </form>
+  </div>
 
-<script>
-   function appendToDisplay(value) {
+  <script>
+    /**
+     * Ajoute une valeur au champ d'affichage.
+     * @param {string} value - Le caractère à concaténer (chiffre ou opérateur).
+     */
+    function appendToDisplay(value) {
       const display = document.getElementById('display');
       display.value += value;
-   }
+    }
 
-   function clearDisplay() {
+    /**
+     * Réinitialise l'affichage.
+     * Cette action est purement client (aucun appel au serveur).
+     */
+    function clearDisplay() {
       document.getElementById('display').value = '';
-   }
-</script>
+    }
+  </script>
 </body>
 </html>
