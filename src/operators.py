@@ -62,4 +62,4 @@ def divide(a, b):
     Notes:
         La division par zéro peut générer une exception Python.
     """
-    return a // b
+    return a / b
